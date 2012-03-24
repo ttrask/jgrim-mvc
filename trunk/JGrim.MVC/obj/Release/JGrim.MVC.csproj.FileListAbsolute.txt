@@ -1,0 +1,5 @@
+F:\JGrim.MVC\JGrim.MVC\bin\JGrim.MVC.dll
+F:\JGrim.MVC\JGrim.MVC\bin\JGrim.MVC.pdb
+F:\JGrim.MVC\JGrim.MVC\obj\Release\ResolveAssemblyReference.cache
+F:\JGrim.MVC\JGrim.MVC\obj\Release\JGrim.MVC.dll
+F:\JGrim.MVC\JGrim.MVC\obj\Release\JGrim.MVC.pdb

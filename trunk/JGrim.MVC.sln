@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JGrim.MVC", "JGrim.MVC\JGrim.MVC.csproj", "{F2FDB166-3905-4CF4-8785-5A4EE06AD7A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcPager", "MvcPager\MvcPager.csproj", "{71DCE177-5227-4D7E-A5CB-298AFE33ABE1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F2FDB166-3905-4CF4-8785-5A4EE06AD7A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2FDB166-3905-4CF4-8785-5A4EE06AD7A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2FDB166-3905-4CF4-8785-5A4EE06AD7A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2FDB166-3905-4CF4-8785-5A4EE06AD7A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71DCE177-5227-4D7E-A5CB-298AFE33ABE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71DCE177-5227-4D7E-A5CB-298AFE33ABE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71DCE177-5227-4D7E-A5CB-298AFE33ABE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71DCE177-5227-4D7E-A5CB-298AFE33ABE1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

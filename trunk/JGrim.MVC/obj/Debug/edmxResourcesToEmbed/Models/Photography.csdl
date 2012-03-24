@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="JGrimModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2006/04/edm">
+  <EntityContainer Name="JGrimEntities1">
+    <FunctionImport Name="GetPhotos" />
+    <FunctionImport Name="GetPhotosByAlbumName">
+      <Parameter Name="AlbumName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertPage">
+      <Parameter Name="PageName" Mode="In" Type="String" />
+      <Parameter Name="PageAddress" Mode="In" Type="String" />
+      <Parameter Name="PageContent" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="InsertUser">
+      <Parameter Name="Username" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+    </FunctionImport>
+    <EntitySet Name="Logs" EntityType="JGrimModel.Log" />
+    <EntitySet Name="Pages" EntityType="JGrimModel.Page" />
+    <EntitySet Name="Photos" EntityType="JGrimModel.Photo" />
+    <EntitySet Name="PhotoAlbums" EntityType="JGrimModel.PhotoAlbum" />
+    <EntitySet Name="Users" EntityType="JGrimModel.User" />
+    <EntitySet Name="UserRoles" EntityType="JGrimModel.UserRole" />
+    <AssociationSet Name="FK_Image_ImageCategory" Association="JGrimModel.FK_Image_ImageCategory">
+      <End Role="PhotoAlbum" EntitySet="PhotoAlbums" />
+      <End Role="Photo" EntitySet="Photos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_UserRole" Association="JGrimModel.FK_User_UserRole">
+      <End Role="UserRole" EntitySet="UserRoles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="ErrorLogID" />
+    </Key>
+    <Property Type="Int32" Name="ErrorLogID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="ErrorMessage" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="LogDate" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Page">
+    <Key>
+      <PropertyRef Name="PageID" />
+    </Key>
+    <Property Type="Int32" Name="PageID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Url" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="PageContent" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="Boolean" Name="IsPermanent" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Photo">
+    <Key>
+      <PropertyRef Name="PhotoID" />
+    </Key>
+    <Property Type="Int32" Name="PhotoID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="FileName" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Description" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="ContentType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <NavigationProperty Name="PhotoAlbum" Relationship="JGrimModel.FK_Image_ImageCategory" FromRole="Photo" ToRole="PhotoAlbum" />
+    <Property Type="DateTime" Name="CreateDate" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PhotoAlbum">
+    <Key>
+      <PropertyRef Name="PhotoAlbumID" />
+    </Key>
+    <Property Type="Byte" Name="PhotoAlbumID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="Description" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AlbumCoverUrl" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="AlbumFileLocation" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="Boolean" Name="IsPermanent" Nullable="false" />
+    <NavigationProperty Name="Photos" Relationship="JGrimModel.FK_Image_ImageCategory" FromRole="PhotoAlbum" ToRole="Photo" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Type="Int32" Name="UserID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="Username" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Binary" Name="DbPassword" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="DateTime" Name="CreateDate" Nullable="false" />
+    <Property Type="DateTime" Name="ModifyDate" />
+    <Property Type="DateTime" Name="LastLogin" />
+    <NavigationProperty Name="UserRole" Relationship="JGrimModel.FK_User_UserRole" FromRole="User" ToRole="UserRole" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="UserRoleID" />
+    </Key>
+    <Property Type="Int32" Name="UserRoleID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+    <Property Type="String" Name="RoleName" Nullable="false" MaxLength="25" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="JGrimModel.FK_User_UserRole" FromRole="UserRole" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Image_ImageCategory">
+    <End Type="JGrimModel.PhotoAlbum" Role="PhotoAlbum" Multiplicity="1" />
+    <End Type="JGrimModel.Photo" Role="Photo" Multiplicity="*" />
+  </Association>
+  <Association Name="FK_User_UserRole">
+    <End Type="JGrimModel.UserRole" Role="UserRole" Multiplicity="0..1" />
+    <End Type="JGrimModel.User" Role="User" Multiplicity="*" />
+  </Association>
+</Schema>
