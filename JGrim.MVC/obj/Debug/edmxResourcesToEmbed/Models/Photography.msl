@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="urn:schemas-microsoft-com:windows:storage:mapping:CS">
+  <EntityContainerMapping StorageEntityContainer="JGrimModelStoreContainer" CdmEntityContainer="JGrimEntities1">
+    <FunctionImportMapping FunctionImportName="GetPhotos" FunctionName="JGrimModel.Store.GetPhotos" />
+    <FunctionImportMapping FunctionImportName="GetPhotosByAlbumName" FunctionName="JGrimModel.Store.GetPhotosByAlbumName" />
+    <FunctionImportMapping FunctionImportName="InsertPage" FunctionName="JGrimModel.Store.InsertPage" />
+    <FunctionImportMapping FunctionImportName="InsertUser" FunctionName="JGrimModel.Store.InsertUser" />
+    <EntitySetMapping Name="Logs">
+      <EntityTypeMapping TypeName="JGrimModel.Log">
+        <MappingFragment StoreEntitySet="Log">
+          <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+          <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+          <ScalarProperty Name="ErrorLogID" ColumnName="ErrorLogID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pages">
+      <EntityTypeMapping TypeName="JGrimModel.Page">
+        <MappingFragment StoreEntitySet="Page">
+          <ScalarProperty Name="IsPermanent" ColumnName="IsPermanent" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="PageContent" ColumnName="PageContent" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PageID" ColumnName="PageID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Photos">
+      <EntityTypeMapping TypeName="JGrimModel.Photo">
+        <MappingFragment StoreEntitySet="Photo">
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PhotoID" ColumnName="PhotoID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PhotoAlbums">
+      <EntityTypeMapping TypeName="JGrimModel.PhotoAlbum">
+        <MappingFragment StoreEntitySet="PhotoAlbum">
+          <ScalarProperty Name="IsPermanent" ColumnName="IsPermanent" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="AlbumFileLocation" ColumnName="AlbumFileLocation" />
+          <ScalarProperty Name="AlbumCoverUrl" ColumnName="AlbumCoverUrl" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="PhotoAlbumID" ColumnName="PhotoAlbumID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="JGrimModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+          <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="DbPassword" ColumnName="DbPassword" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRoles">
+      <EntityTypeMapping TypeName="JGrimModel.UserRole">
+        <MappingFragment StoreEntitySet="UserRole">
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="FK_Image_ImageCategory" TypeName="JGrimModel.FK_Image_ImageCategory" StoreEntitySet="Photo">
+      <EndProperty Name="Photo">
+        <ScalarProperty Name="PhotoID" ColumnName="PhotoID" />
+      </EndProperty>
+      <EndProperty Name="PhotoAlbum">
+        <ScalarProperty Name="PhotoAlbumID" ColumnName="PhotoAlbumID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FK_User_UserRole" TypeName="JGrimModel.FK_User_UserRole" StoreEntitySet="User">
+      <EndProperty Name="User">
+        <ScalarProperty Name="UserID" ColumnName="UserID" />
+      </EndProperty>
+      <EndProperty Name="UserRole">
+        <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
+      </EndProperty>
+      <Condition ColumnName="UserRoleID" IsNull="false" />
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

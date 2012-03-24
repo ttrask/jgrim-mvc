@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="JGrimModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2006/04/edm/ssdl">
+  <EntityContainer Name="JGrimModelStoreContainer">
+    <EntitySet Name="Log" EntityType="JGrimModel.Store.Log" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Page" EntityType="JGrimModel.Store.Page" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Photo" EntityType="JGrimModel.Store.Photo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PhotoAlbum" EntityType="JGrimModel.Store.PhotoAlbum" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="User" EntityType="JGrimModel.Store.User" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserRole" EntityType="JGrimModel.Store.UserRole" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Image_ImageCategory" Association="JGrimModel.Store.FK_Image_ImageCategory">
+      <End Role="PhotoAlbum" EntitySet="PhotoAlbum" />
+      <End Role="Photo" EntitySet="Photo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_UserRole" Association="JGrimModel.Store.FK_User_UserRole">
+      <End Role="UserRole" EntitySet="UserRole" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Log">
+    <Key>
+      <PropertyRef Name="ErrorLogID" />
+    </Key>
+    <Property Name="ErrorLogID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ErrorMessage" Type="nvarchar(max)" />
+    <Property Name="LogDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Page">
+    <Key>
+      <PropertyRef Name="PageID" />
+    </Key>
+    <Property Name="PageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Url" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="PageContent" Type="text" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsPermanent" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Photo">
+    <Key>
+      <PropertyRef Name="PhotoID" />
+    </Key>
+    <Property Name="PhotoID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="FileName" Type="nvarchar" MaxLength="200" />
+    <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="250" />
+    <Property Name="PhotoAlbumID" Type="tinyint" Nullable="false" />
+    <Property Name="ContentType" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PhotoAlbum">
+    <Key>
+      <PropertyRef Name="PhotoAlbumID" />
+    </Key>
+    <Property Name="PhotoAlbumID" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="nvarchar" MaxLength="200" />
+    <Property Name="AlbumCoverUrl" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="AlbumFileLocation" Type="nvarchar" MaxLength="200" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="IsPermanent" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="DbPassword" Type="varbinary(max)" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="ModifyDate" Type="datetime" />
+    <Property Name="LastLogin" Type="datetime" />
+    <Property Name="UserRoleID" Type="int" />
+  </EntityType>
+  <EntityType Name="UserRole">
+    <Key>
+      <PropertyRef Name="UserRoleID" />
+    </Key>
+    <Property Name="UserRoleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="nchar" Nullable="false" MaxLength="25" />
+  </EntityType>
+  <Association Name="FK_Image_ImageCategory">
+    <End Role="PhotoAlbum" Type="JGrimModel.Store.PhotoAlbum" Multiplicity="1" />
+    <End Role="Photo" Type="JGrimModel.Store.Photo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhotoAlbum">
+        <PropertyRef Name="PhotoAlbumID" />
+      </Principal>
+      <Dependent Role="Photo">
+        <PropertyRef Name="PhotoAlbumID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_UserRole">
+    <End Role="UserRole" Type="JGrimModel.Store.UserRole" Multiplicity="0..1" />
+    <End Role="User" Type="JGrimModel.Store.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserRole">
+        <PropertyRef Name="UserRoleID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="UserRoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="AuthenticateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Username" Type="nvarchar" Mode="In" />
+    <Parameter Name="Password" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="GetPhotos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="GetPhotosByAlbumName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AlbumName" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="InsertPage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageName" Type="nvarchar" Mode="In" />
+    <Parameter Name="PageAddress" Type="nvarchar" Mode="In" />
+    <Parameter Name="PageContent" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="InsertUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Username" Type="nvarchar" Mode="In" />
+    <Parameter Name="Password" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="RetrieveAllPages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="RetrievePageByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="RetrievePageByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageName" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="RetrievePageByUrl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageUrl" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="SaveImageAlbum" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AlbumName" Type="nvarchar" Mode="In" />
+    <Parameter Name="AlbumDescription" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="SavePhoto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ImageName" Type="nvarchar" Mode="In" />
+    <Parameter Name="ImageType" Type="nvarchar" Mode="In" />
+    <Parameter Name="ImageAlbumName" Type="nvarchar" Mode="In" />
+    <Parameter Name="FileName" Type="nvarchar" Mode="In" />
+    <Parameter Name="Description" Type="nvarchar" Mode="In" />
+    <Parameter Name="ThumbnailPath" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="UpdatePage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageID" Type="int" Mode="In" />
+    <Parameter Name="PageName" Type="nvarchar" Mode="In" />
+    <Parameter Name="PageUrl" Type="nvarchar" Mode="In" />
+    <Parameter Name="PageContent" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="UpdatePageByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageName" Type="nvarchar" Mode="In" />
+    <Parameter Name="PageUrl" Type="nvarchar" Mode="In" />
+    <Parameter Name="PageContent" Type="nvarchar(max)" Mode="In" />
+  </Function>
+</Schema>

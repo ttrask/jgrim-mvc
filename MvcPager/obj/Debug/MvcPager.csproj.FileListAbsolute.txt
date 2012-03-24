@@ -1,0 +1,5 @@
+F:\JGrim.MVC\MvcPager\obj\Debug\ResolveAssemblyReference.cache
+F:\JGrim.MVC\MvcPager\bin\Debug\MvcPager.dll
+F:\JGrim.MVC\MvcPager\bin\Debug\MvcPager.pdb
+F:\JGrim.MVC\MvcPager\obj\Debug\MvcPager.dll
+F:\JGrim.MVC\MvcPager\obj\Debug\MvcPager.pdb

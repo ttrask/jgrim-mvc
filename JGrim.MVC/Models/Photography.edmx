@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="JGrimModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2006/04/edm/ssdl">
+        <EntityContainer Name="JGrimModelStoreContainer">
+          <EntitySet Name="Log" EntityType="JGrimModel.Store.Log" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Page" EntityType="JGrimModel.Store.Page" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Photo" EntityType="JGrimModel.Store.Photo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PhotoAlbum" EntityType="JGrimModel.Store.PhotoAlbum" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="User" EntityType="JGrimModel.Store.User" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserRole" EntityType="JGrimModel.Store.UserRole" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Image_ImageCategory" Association="JGrimModel.Store.FK_Image_ImageCategory">
+            <End Role="PhotoAlbum" EntitySet="PhotoAlbum" />
+            <End Role="Photo" EntitySet="Photo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_UserRole" Association="JGrimModel.Store.FK_User_UserRole">
+            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="ErrorLogID" />
+          </Key>
+          <Property Name="ErrorLogID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ErrorMessage" Type="nvarchar(max)" />
+          <Property Name="LogDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Page">
+          <Key>
+            <PropertyRef Name="PageID" />
+          </Key>
+          <Property Name="PageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Url" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="PageContent" Type="text" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsPermanent" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Photo">
+          <Key>
+            <PropertyRef Name="PhotoID" />
+          </Key>
+          <Property Name="PhotoID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Description" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="PhotoAlbumID" Type="tinyint" Nullable="false" />
+          <Property Name="ContentType" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PhotoAlbum">
+          <Key>
+            <PropertyRef Name="PhotoAlbumID" />
+          </Key>
+          <Property Name="PhotoAlbumID" Type="tinyint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="AlbumCoverUrl" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="AlbumFileLocation" Type="nvarchar" MaxLength="200" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsPermanent" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="DbPassword" Type="varbinary(max)" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifyDate" Type="datetime" />
+          <Property Name="LastLogin" Type="datetime" />
+          <Property Name="UserRoleID" Type="int" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserRoleID" />
+          </Key>
+          <Property Name="UserRoleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="nchar" Nullable="false" MaxLength="25" />
+        </EntityType>
+        <Association Name="FK_Image_ImageCategory">
+          <End Role="PhotoAlbum" Type="JGrimModel.Store.PhotoAlbum" Multiplicity="1" />
+          <End Role="Photo" Type="JGrimModel.Store.Photo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PhotoAlbum">
+              <PropertyRef Name="PhotoAlbumID" />
+            </Principal>
+            <Dependent Role="Photo">
+              <PropertyRef Name="PhotoAlbumID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_UserRole">
+          <End Role="UserRole" Type="JGrimModel.Store.UserRole" Multiplicity="0..1" />
+          <End Role="User" Type="JGrimModel.Store.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRole">
+              <PropertyRef Name="UserRoleID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AuthenticateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Username" Type="nvarchar" Mode="In" />
+          <Parameter Name="Password" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetPhotos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetPhotosByAlbumName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AlbumName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="InsertPage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PageName" Type="nvarchar" Mode="In" />
+          <Parameter Name="PageAddress" Type="nvarchar" Mode="In" />
+          <Parameter Name="PageContent" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="InsertUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Username" Type="nvarchar" Mode="In" />
+          <Parameter Name="Password" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="RetrieveAllPages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="RetrievePageByID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PageID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RetrievePageByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PageName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="RetrievePageByUrl" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PageUrl" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SaveImageAlbum" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AlbumName" Type="nvarchar" Mode="In" />
+          <Parameter Name="AlbumDescription" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SavePhoto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ImageName" Type="nvarchar" Mode="In" />
+          <Parameter Name="ImageType" Type="nvarchar" Mode="In" />
+          <Parameter Name="ImageAlbumName" Type="nvarchar" Mode="In" />
+          <Parameter Name="FileName" Type="nvarchar" Mode="In" />
+          <Parameter Name="Description" Type="nvarchar" Mode="In" />
+          <Parameter Name="ThumbnailPath" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="UpdatePage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PageID" Type="int" Mode="In" />
+          <Parameter Name="PageName" Type="nvarchar" Mode="In" />
+          <Parameter Name="PageUrl" Type="nvarchar" Mode="In" />
+          <Parameter Name="PageContent" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="UpdatePageByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PageName" Type="nvarchar" Mode="In" />
+          <Parameter Name="PageUrl" Type="nvarchar" Mode="In" />
+          <Parameter Name="PageContent" Type="nvarchar(max)" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="JGrimModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2006/04/edm">
+        <EntityContainer Name="JGrimEntities1">
+          <FunctionImport Name="GetPhotos" />
+          <FunctionImport Name="GetPhotosByAlbumName">
+          <Parameter Name="AlbumName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertPage">
+            <Parameter Name="PageName" Mode="In" Type="String" />
+            <Parameter Name="PageAddress" Mode="In" Type="String" />
+            <Parameter Name="PageContent" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertUser">
+            <Parameter Name="Username" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Logs" EntityType="JGrimModel.Log" />
+          <EntitySet Name="Pages" EntityType="JGrimModel.Page" />
+          <EntitySet Name="Photos" EntityType="JGrimModel.Photo" />
+          <EntitySet Name="PhotoAlbums" EntityType="JGrimModel.PhotoAlbum" />
+          <EntitySet Name="Users" EntityType="JGrimModel.User" />
+          <EntitySet Name="UserRoles" EntityType="JGrimModel.UserRole" />
+          <AssociationSet Name="FK_Image_ImageCategory" Association="JGrimModel.FK_Image_ImageCategory">
+            <End Role="PhotoAlbum" EntitySet="PhotoAlbums" />
+            <End Role="Photo" EntitySet="Photos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_UserRole" Association="JGrimModel.FK_User_UserRole">
+            <End Role="UserRole" EntitySet="UserRoles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="ErrorLogID" />
+          </Key>
+          <Property Type="Int32" Name="ErrorLogID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="ErrorMessage" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="LogDate" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Page">
+          <Key>
+            <PropertyRef Name="PageID" />
+          </Key>
+          <Property Type="Int32" Name="PageID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Url" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PageContent" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Boolean" Name="IsPermanent" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Photo">
+          <Key>
+            <PropertyRef Name="PhotoID" />
+          </Key>
+          <Property Type="Int32" Name="PhotoID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FileName" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ContentType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <NavigationProperty Name="PhotoAlbum" Relationship="JGrimModel.FK_Image_ImageCategory" FromRole="Photo" ToRole="PhotoAlbum" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PhotoAlbum">
+          <Key>
+            <PropertyRef Name="PhotoAlbumID" />
+          </Key>
+          <Property Type="Byte" Name="PhotoAlbumID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Description" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="AlbumCoverUrl" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="AlbumFileLocation" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Boolean" Name="IsPermanent" Nullable="false" />
+          <NavigationProperty Name="Photos" Relationship="JGrimModel.FK_Image_ImageCategory" FromRole="PhotoAlbum" ToRole="Photo" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Type="Int32" Name="UserID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="Username" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Binary" Name="DbPassword" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" />
+          <Property Type="DateTime" Name="ModifyDate" />
+          <Property Type="DateTime" Name="LastLogin" />
+          <NavigationProperty Name="UserRole" Relationship="JGrimModel.FK_User_UserRole" FromRole="User" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserRoleID" />
+          </Key>
+          <Property Type="Int32" Name="UserRoleID" Nullable="false" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="RoleName" Nullable="false" MaxLength="25" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="JGrimModel.FK_User_UserRole" FromRole="UserRole" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Image_ImageCategory">
+          <End Type="JGrimModel.PhotoAlbum" Role="PhotoAlbum" Multiplicity="1" />
+          <End Type="JGrimModel.Photo" Role="Photo" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_User_UserRole">
+          <End Type="JGrimModel.UserRole" Role="UserRole" Multiplicity="0..1" />
+          <End Type="JGrimModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="urn:schemas-microsoft-com:windows:storage:mapping:CS">
+        <EntityContainerMapping StorageEntityContainer="JGrimModelStoreContainer" CdmEntityContainer="JGrimEntities1">
+          <FunctionImportMapping FunctionImportName="GetPhotos" FunctionName="JGrimModel.Store.GetPhotos" />
+          <FunctionImportMapping FunctionImportName="GetPhotosByAlbumName" FunctionName="JGrimModel.Store.GetPhotosByAlbumName" />
+          <FunctionImportMapping FunctionImportName="InsertPage" FunctionName="JGrimModel.Store.InsertPage" />
+          <FunctionImportMapping FunctionImportName="InsertUser" FunctionName="JGrimModel.Store.InsertUser" />
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="JGrimModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+                <ScalarProperty Name="ErrorLogID" ColumnName="ErrorLogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pages">
+            <EntityTypeMapping TypeName="JGrimModel.Page">
+              <MappingFragment StoreEntitySet="Page">
+                <ScalarProperty Name="IsPermanent" ColumnName="IsPermanent" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="PageContent" ColumnName="PageContent" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PageID" ColumnName="PageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Photos">
+            <EntityTypeMapping TypeName="JGrimModel.Photo">
+              <MappingFragment StoreEntitySet="Photo">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PhotoID" ColumnName="PhotoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhotoAlbums">
+            <EntityTypeMapping TypeName="JGrimModel.PhotoAlbum">
+              <MappingFragment StoreEntitySet="PhotoAlbum">
+                <ScalarProperty Name="IsPermanent" ColumnName="IsPermanent" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AlbumFileLocation" ColumnName="AlbumFileLocation" />
+                <ScalarProperty Name="AlbumCoverUrl" ColumnName="AlbumCoverUrl" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PhotoAlbumID" ColumnName="PhotoAlbumID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="JGrimModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="DbPassword" ColumnName="DbPassword" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="JGrimModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_Image_ImageCategory" TypeName="JGrimModel.FK_Image_ImageCategory" StoreEntitySet="Photo">
+            <EndProperty Name="Photo">
+              <ScalarProperty Name="PhotoID" ColumnName="PhotoID" />
+            </EndProperty>
+            <EndProperty Name="PhotoAlbum">
+              <ScalarProperty Name="PhotoAlbumID" ColumnName="PhotoAlbumID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_User_UserRole" TypeName="JGrimModel.FK_User_UserRole" StoreEntitySet="User">
+            <EndProperty Name="User">
+              <ScalarProperty Name="UserID" ColumnName="UserID" />
+            </EndProperty>
+            <EndProperty Name="UserRole">
+              <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
+            </EndProperty>
+            <Condition ColumnName="UserRoleID" IsNull="false" />
+          </AssociationSetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2007/06/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Photography">
+        <EntityTypeShape EntityType="JGrimModel.Log" Width="1.5" PointX="5.75" PointY="0.75" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="JGrimModel.Page" Width="1.5" PointX="5.75" PointY="3.75" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="JGrimModel.Photo" Width="1.5" PointX="3" PointY="5" Height="2.5571907552083317" />
+        <EntityTypeShape EntityType="JGrimModel.PhotoAlbum" Width="1.5" PointX="0.75" PointY="5" Height="2.5571907552083317" />
+        <EntityTypeShape EntityType="JGrimModel.User" Width="1.5" PointX="3" PointY="1" Height="2.5571907552083317" />
+        <EntityTypeShape EntityType="JGrimModel.UserRole" Width="1.5" PointX="0.75" PointY="1.375" Height="1.5956835937500031" />
+        <AssociationConnector Association="JGrimModel.FK_Image_ImageCategory" >
+          <ConnectorPoint PointX="2.25" PointY="6.2785953776041659" />
+          <ConnectorPoint PointX="3" PointY="6.2785953776041659" />
+        </AssociationConnector>
+        <AssociationConnector Association="JGrimModel.FK_User_UserRole" >
+          <ConnectorPoint PointX="2.25" PointY="2.1728417968750016" />
+          <ConnectorPoint PointX="3" PointY="2.1728417968750016" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

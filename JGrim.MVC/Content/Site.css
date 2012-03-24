@@ -1,0 +1,392 @@
+﻿/* DEFAULTS
+----------------------------------------------------------*/
+
+body   
+{
+    background: #fff;
+    font-size: 1.0em;
+    font-family: "Helvetica Neue", "Lucida Grande", Arial, Helvetica, Verdana, sans-serif;
+    
+    margin: 0px;
+    padding: 0px;
+    color: #696969;
+}
+
+a:link, a:visited
+{
+    color: #034af3;
+}
+
+a:hover
+{
+    color: #1d60ff;
+    text-decoration: none;
+}
+
+a:active
+{
+    color: #034af3;
+}
+
+p
+{
+    margin-bottom: 10px;
+    line-height: 1.6em;
+}
+
+
+td
+{
+    text-align:left;
+    vertical-align:top;
+}
+
+div
+{
+    padding:0;
+    margin:0;
+    border:0;
+}
+/* HEADINGS   
+----------------------------------------------------------*/
+
+h1, h2, h3, h4, h5, h6
+{
+    font-size: 1.5em;
+    color: #000;
+    font-variant: small-caps;
+    text-transform: none;
+    font-weight: 200;
+    margin-bottom: 0px;
+}
+
+h1
+{
+    font-size: 1.6em;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+h2
+{
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+h3
+{
+    font-size: 1.2em;
+}
+
+h4
+{
+    font-size: 1.1em;
+}
+
+h5, h6
+{
+    font-size: 1em;
+}
+
+
+/* this rule styles <h1> and <h2> tags that are the 
+first child of the left and right table columns */
+.rightColumn > h1, .rightColumn > h2, .leftColumn > h1, .leftColumn > h2
+{
+    margin-top: 0px;
+}
+
+
+/* PRIMARY LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+
+.page
+{
+    max-width: 840px;
+    background-color: #fff;
+    margin: 20px auto 0px auto;
+    border: 1px solid #496077;
+    -moz-box-shadow: 4px 4px 4px #000;
+    -webkit-box-shadow: 10px 10px 5px #000;
+    box-shadow: 10px 10px 5px #888;
+}
+ 
+.header
+{
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    border-bottom:1px solid black;;
+}
+
+
+.header h1
+{
+    font-weight: 700;
+    margin: 0px;
+    padding: 0px 0px 0px 20px;
+    color: #000;
+    border: none;
+    line-height: 2em;
+    font-size: 2em;
+}
+
+.main
+{
+    padding: 0px 12px;
+    margin: 12px 8px 8px 8px;
+    min-height: 420px;
+    min-height: 550px;
+    width:100%;
+    min-width:520px;
+    border-left:2px solid #ccc;
+    
+}
+
+.leftCol
+{
+    padding: 6px 0px;
+    margin: 12px 8px 8px 8px;
+    
+}
+
+.footer
+{
+    color: #4e5766;
+    padding: 8px 0px 0px 0px;
+    margin: 0px auto;
+    text-align: center;
+    line-height: normal;
+}
+
+#galleria
+{
+    height: 320px;
+}
+
+
+.link
+{
+    text-decoration:underline;
+    color:Blue;
+    cursor:pointer;
+    
+}
+
+
+/* TAB MENU   
+----------------------------------------------------------*/
+
+div.hideSkiplink
+{
+    background-color:#3a4f63;
+    width:100%;
+}
+
+.menu, 
+{
+    vertical-align:top;
+    margin-right:10px;
+    padding: 4px 0px 4px 8px;
+    float:left; 
+    
+}
+
+.menu ul
+{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    width: auto;
+}
+
+.menu ul li a, .menu ul li a:visited
+{
+    background-color: white;
+    color: black;
+    display: block;
+    line-height: 1.35em;
+    padding: 4px 20px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.menu ul li a:hover
+{
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+}
+
+.menu ul li a:active
+{
+    background-color: #465c71;
+    color: #cfdbe6;
+    text-decoration: none;
+}
+
+
+.MenuHover
+{
+    position:absolute;
+    right:0;
+    width:10px;
+    color:Fuchsia;
+}
+/* Icon Nav 
+----------------------------------------------------------*/
+
+#PhotoIcons
+{
+    width:100%;
+    text-align:center;
+    padding-top:10px;
+}
+
+#PhotoIcons h1
+{
+    font:"Segoe UI Semibold" 18px bolder;
+}
+
+.NavIcon
+{
+    margin:10px;
+    display:inline-block;
+    border:2px solid #ccc;
+    padding:10px;
+    border-radius:3px;
+}
+
+img.hover
+{
+}
+
+a.NavIcon, a.NavIcon img
+{
+    text-decoration:none;
+    text-align:center;
+    
+    font-weight:900;
+}
+
+a.NavIcon img
+{
+    border:0px;
+    width:150px;
+}
+
+.NavIcon:hover
+{
+    cursor:pointer hand;
+    border:2px solid black;
+    
+}
+
+
+/*Photo Navigator Breadcrumb trail
+---------------------------------------------------*/
+#breadCrumbs a, #breadCrumbs a:hover, #breadCrumbs a:visited, #breadCrumbs a:link
+{
+    position:relative;
+    z-index:0;
+    color:#fff;
+    cursor:arrow;
+    text-decoration:none;
+    
+}
+
+.breadCrumbLink
+{   
+    z-index:1;
+    color:#fff;
+    width:110px;
+    position:relative;
+    text-decoration:none;
+    vertical-align:middle;
+    font-size: .80em;
+    font-weight:bolder;
+    text-align:center; 
+    padding-right:8px;
+    padding-left:10px;
+    padding-bottom:0;
+    margin-left:10px;
+    height:20px;
+    display:inline-block;
+    background-color:#000;
+    position:relative;
+    right:20px;
+}
+
+
+.breadCrumbLink:first-child
+{
+    right:10px;
+}
+
+
+.breadCrumbLink .arrow-bg
+{
+    width:2px;
+    background-color:#fff;
+    position:absolute;
+    top:0;
+    right:-20px;
+}
+.breadCrumbLink .arrow
+{
+  border-color: transparent transparent transparent #000;  
+  border-style: solid;
+  border-width: 10px;
+  width:0;
+  height:0;
+  position:absolute;
+  top:0;
+  right:-19px;
+}
+
+
+.arrow_last
+{
+  border-color: transparent transparent transparent #888;  
+  right:1px;}
+
+.breadCrumbLink .arrow-border 
+{
+    
+  position:absolute; 
+  border-color: transparent transparent transparent white;
+  border-style: solid;
+  border-width: 10px;
+  width:0;
+  height:0;
+  right:-21px;
+  top:0;
+}
+
+
+div.NavIcon h5
+{
+    text-align:center;
+    font: 1.1em bolder; 
+}
+
+.clear
+{
+    clear: both;
+}
+
+.title
+{
+    display: block;
+    float: left;
+    text-align: left;
+    width: auto;
+}
+
+.submitButton
+{
+    text-align: right;
+    padding-right: 10px;
+}
+

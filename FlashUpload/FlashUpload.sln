@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashUpload", "FlashUpload\FlashUpload.csproj", "{8885F443-D443-4E8F-A0BA-B338D08A6CFB}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "FlashUpload_Web", "FlashUpload_Web\", "{D52FE40A-6CEE-49C2-90A6-A38F70B7B390}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
+		ProjectReferences = "{8885F443-D443-4E8F-A0BA-B338D08A6CFB}|FlashUpload.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/FlashUpload_Web"
+		Debug.AspNetCompiler.PhysicalPath = "FlashUpload_Web\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\FlashUpload_Web\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/FlashUpload_Web"
+		Release.AspNetCompiler.PhysicalPath = "FlashUpload_Web\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\FlashUpload_Web\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "51324"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|.NET = Debug|.NET
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Release|.NET = Release|.NET
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8885F443-D443-4E8F-A0BA-B338D08A6CFB}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{8885F443-D443-4E8F-A0BA-B338D08A6CFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8885F443-D443-4E8F-A0BA-B338D08A6CFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8885F443-D443-4E8F-A0BA-B338D08A6CFB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8885F443-D443-4E8F-A0BA-B338D08A6CFB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8885F443-D443-4E8F-A0BA-B338D08A6CFB}.Release|.NET.ActiveCfg = Release|Any CPU
+		{8885F443-D443-4E8F-A0BA-B338D08A6CFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8885F443-D443-4E8F-A0BA-B338D08A6CFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8885F443-D443-4E8F-A0BA-B338D08A6CFB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8885F443-D443-4E8F-A0BA-B338D08A6CFB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D52FE40A-6CEE-49C2-90A6-A38F70B7B390}.Debug|.NET.ActiveCfg = Debug|.NET
+		{D52FE40A-6CEE-49C2-90A6-A38F70B7B390}.Debug|.NET.Build.0 = Debug|.NET
+		{D52FE40A-6CEE-49C2-90A6-A38F70B7B390}.Debug|Any CPU.ActiveCfg = Debug|.NET
+		{D52FE40A-6CEE-49C2-90A6-A38F70B7B390}.Debug|Mixed Platforms.ActiveCfg = Debug|.NET
+		{D52FE40A-6CEE-49C2-90A6-A38F70B7B390}.Debug|Mixed Platforms.Build.0 = Debug|.NET
+		{D52FE40A-6CEE-49C2-90A6-A38F70B7B390}.Release|.NET.ActiveCfg = Debug|.NET
+		{D52FE40A-6CEE-49C2-90A6-A38F70B7B390}.Release|.NET.Build.0 = Debug|.NET
+		{D52FE40A-6CEE-49C2-90A6-A38F70B7B390}.Release|Any CPU.ActiveCfg = Debug|.NET
+		{D52FE40A-6CEE-49C2-90A6-A38F70B7B390}.Release|Mixed Platforms.ActiveCfg = Debug|.NET
+		{D52FE40A-6CEE-49C2-90A6-A38F70B7B390}.Release|Mixed Platforms.Build.0 = Debug|.NET
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
